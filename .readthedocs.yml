@@ -3,7 +3,15 @@ version: 2
 sphinx:
   configuration: doc/conf.py
 
+build:
+  os: "ubuntu-22.04"
+  tools:
+    python: "3.8"
+
 python:
+<<<<<<< HEAD
   version: 3.7
+=======
+>>>>>>> bc0c78058 (Update RTD config for build.os config change (#9272))
   install:
     - requirements: doc/requirements.txt
