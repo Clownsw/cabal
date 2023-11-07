@@ -1,6 +1,7 @@
 # cabal v2-update
 Downloading the latest package list from test-local-repo
 # cabal v2-build
+Querying pkg-config database...
 Resolving dependencies...
 Build profile: -w ghc-<GHCVER> -O1
 In order, the following would be built:

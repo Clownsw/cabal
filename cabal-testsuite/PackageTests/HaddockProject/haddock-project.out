@@ -2,6 +2,7 @@
 Downloading the latest package list from test-local-repo
 # cabal haddock-project
 Warning: haddock-project command is experimental, it might break in the future
+Querying pkg-config database...
 Resolving dependencies...
 Build profile: -w ghc-<GHCVER> -O1
 In order, the following will be built:
