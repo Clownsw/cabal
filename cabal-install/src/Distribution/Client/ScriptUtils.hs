@@ -20,7 +20,49 @@ import Distribution.Compat.Lens
 import qualified Distribution.Types.Lens as L
 
 import Distribution.CabalSpecVersion
+<<<<<<< HEAD
     ( CabalSpecVersion (..), cabalSpecLatest)
+=======
+  ( CabalSpecVersion (..)
+  , cabalSpecLatest
+  )
+import Distribution.Client.Config
+  ( defaultScriptBuildsDir
+  )
+import Distribution.Client.DistDirLayout
+  ( DistDirLayout (..)
+  , DistDirParams (..)
+  )
+import Distribution.Client.HashValue
+  ( hashValue
+  , showHashValue
+  , truncateHash
+  )
+import Distribution.Client.HttpUtils
+  ( HttpTransport
+  , configureTransport
+  )
+import Distribution.Client.NixStyleOptions
+  ( NixStyleFlags (..)
+  )
+import Distribution.Client.ProjectConfig
+  ( PackageConfig (..)
+  , ProjectConfig (..)
+  , ProjectConfigShared (..)
+  , projectConfigHttpTransport
+  , reportParseResult
+  , withGlobalConfig
+  , withProjectOrGlobalConfig
+  )
+import Distribution.Client.ProjectConfig.Legacy
+  ( ProjectConfigSkeleton
+  , instantiateProjectConfigSkeletonFetchingCompiler
+  , parseProjectSkeleton
+  )
+import Distribution.Client.ProjectFlags
+  ( flagIgnoreProject
+  )
+>>>>>>> 97f99171b (Use Base16 hash for script path.)
 import Distribution.Client.ProjectOrchestration
 import Distribution.Client.Config
     ( defaultScriptBuildsDir )
@@ -131,17 +173,27 @@ import qualified Text.Parsec as P
 --    repl to deal with the fact that the repl is relative to the working directory and not
 --    the project root.
 
--- | Get the hash of a script's absolute path)
+-- | Get the hash of a script's absolute path.
 --
 -- Two hashes will be the same as long as the absolute paths
 -- are the same.
 getScriptHash :: FilePath -> IO String
+<<<<<<< HEAD
 getScriptHash script
   -- Base64 is shorter than Base16, which helps avoid long path issues on windows
   -- but it can contain /'s which aren't valid in file paths so replace them with
   -- %'s. 26 chars / 130 bits is enough to practically avoid collisions.
   = map (\c -> if c == '/' then '%' else c) . take 26
   . showHashValueBase64 . hashValue . fromString <$> canonicalizePath script
+=======
+getScriptHash script =
+  -- Truncation here tries to help with long path issues on Windows.
+  showHashValue
+    . truncateHash 26
+    . hashValue
+    . fromString
+    <$> canonicalizePath script
+>>>>>>> 97f99171b (Use Base16 hash for script path.)
 
 -- | Get the directory for caching a script build.
 --
